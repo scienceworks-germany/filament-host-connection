@@ -20,7 +20,8 @@ return [
     */
     'endpoints' => [
         'connect' => '/api/connect',
-        'poll' => '/api/connect/status',
+        // {requestId} placeholder is replaced at call time and URL-encoded.
+        'poll' => '/api/connect/{requestId}/status',
         'disconnect' => '/api/connect/disconnect',
     ],
 

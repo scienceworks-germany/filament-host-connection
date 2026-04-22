@@ -68,18 +68,21 @@ class HostConnectionClient
         }
 
         $hostUrl = $this->normalizeUrl($hostUrl);
-        $endpoint = $hostUrl . $this->endpoint('poll');
+        $endpoint = $hostUrl . str_replace(
+            '{requestId}',
+            rawurlencode($requestId),
+            $this->endpoint('poll'),
+        );
 
         try {
             $request = Http::timeout($this->timeout('poll'))
-                ->acceptJson()
-                ->asJson();
+                ->acceptJson();
 
             if ($token !== null && $token !== '') {
                 $request = $request->withToken($token);
             }
 
-            $response = $request->post($endpoint, ['request_id' => $requestId]);
+            $response = $request->get($endpoint);
         } catch (Throwable $e) {
             throw ConnectionException::httpFailed('poll', $e->getMessage());
         }
