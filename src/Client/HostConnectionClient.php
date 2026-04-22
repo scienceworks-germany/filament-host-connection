@@ -36,8 +36,8 @@ class HostConnectionClient
                 ->acceptJson()
                 ->asJson()
                 ->post($endpoint, array_merge([
-                    'app_name' => config('app.name'),
-                    'app_url' => config('app.url'),
+                    'name' => config('app.name'),
+                    'url' => config('app.url'),
                     'types' => array_values($types),
                 ], $extra));
         } catch (Throwable $e) {
